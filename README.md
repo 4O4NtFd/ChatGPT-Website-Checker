@@ -5,7 +5,7 @@
 
 ChatGPT Web源仓库地址：https://github.com/Chanzhaoyu/chatgpt-web
 
-*~~萌新写的第一个公开脚本~~*
+*~~萌新写的第一个公开脚本，希望大佬们多多star。~~*
 
 
 ## 运行环境
