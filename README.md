@@ -3,7 +3,9 @@
 
 此脚本用于检查文本文件中列出的 ChatGPT 网站的可用性和响应情况。
 
-## 先决条件
+
+
+## 运行环境
 
 - Python 3.x
 - 必要的 Python 包（使用 `pip` 进行安装）：
@@ -11,22 +13,39 @@
   - bs4（BeautifulSoup）
   - urllib3
 
+## 网络测绘
+
+### fofa
+
+`title="ChatGPT Web"`、`icon_hash="-1656043765"`
+
+### ZoomEye
+
+`title:"ChatGPT Web"`
+
+### Shodan
+
+`http.title:"ChatGPT Web"`
+
+### Hunter
+
+`web.title="ChatGPT Web"`
+
+### Quark
+
+`title="ChatGPT Web"`
+
 ## 使用方法
 
 1. 克隆存储库或下载脚本文件。
-2. 安装先决条件中提到的所需的 Python 包。
-3. 准备一个文本文件（`ChatGPT.txt`），其中包含要检查的 ChatGPT 网站的 URL 列表，每个 URL 占一行。
-4. 通过执行
+2. pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+3. 准备一个txt，其中包含要检查的 ChatGPT 网站的 URL 列表。
+4. 运行`ChatGPT Website Checker.py`
+
 
 ## 额外配置
 
 - 代理设置：如果您使用代理，请在脚本中的 `proxies` 字典中更新适当的代理 URL。
-
-## 注意事项
-
-- 此脚本使用多线程进行并行请求，提高了网站检查过程的效率。
-- 脚本抑制了可能在进行未验证的 HTTPS 请求时出现的 `InsecureRequestWarning`。这是因为脚本设计用于检查各种网站，包括具有自签名或无效证书的网站。
-- 脚本发送 GET 和 POST 请求到提供的 URL，并检查响应状态码和网站标题以确定网站的可访问性和性质。
 
 ## 许可证
 
