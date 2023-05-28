@@ -30,6 +30,8 @@ ChatGPT Web源仓库地址：https://github.com/Chanzhaoyu/chatgpt-web
 
 `title="ChatGPT Web"`、`icon_hash="-1656043765"`
 
+`title="ChatGPT Next Web"`
+
 ### ZoomEye
 
 `title:"ChatGPT Web"`
@@ -50,6 +52,10 @@ ChatGPT Web源仓库地址：https://github.com/Chanzhaoyu/chatgpt-web
 ## 额外配置
 
 - 代理设置：如果您使用代理，请在脚本中的 `proxies` 字典中更新适当的代理 URL。
+
+## To-do list
+
+- 增加对title="ChatGPT Next Web"的检测
 
 ## 贡献
 
