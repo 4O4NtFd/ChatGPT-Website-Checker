@@ -39,7 +39,7 @@ def request(line):
         title = soup.title.string
         
         if response.status_code == 200:
-            if 'error' not in response.text and 'fail' not in response.text and title == 'ChatGPT Web':
+            if 'rror' not in response.text and 'fail' not in response.text and title == 'ChatGPT Web':
                 print(line)
                 results_ok.append(line)
             elif 'gpt' in title:
