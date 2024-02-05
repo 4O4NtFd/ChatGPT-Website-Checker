@@ -6,49 +6,44 @@ from urllib3.exceptions import InsecureRequestWarning
 
 # 记得改成自己的代理的地址
 proxies = {
-    'http': 'http://127.0.0.1:7890',
-    'https': 'http://127.0.0.1:7890'
+    'http': 'http://127.0.0.1:8080',
+    'https': 'http://127.0.0.1:8080'
 }
 
-results_ok = []
-results_others = []
+results_ok = set()
+
+def extract_domain(line):
+    # 移除链接尾部的斜杠
+    line = line.rstrip('/')
+    
+    # 提取域名部分
+    start_index = line.find("//")
+    end_index = line.find("/", start_index + 2)
+    
+    return line[:end_index] if end_index != -1 else line
+
 
 def request(line):
     headers = {
         'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
     }
-    data = {
-        'prompt': 'hi',
-        'options': {},
-        'systemMessage': 'You are ChatGPT, a large language model trained by OpenAI. Follow the user\'s instructions carefully. Respond using markdown.',
-        'temperature': 0.8,
-        'top_p': 1
-    }
-    url = f'{line}/api/chat-process'
+    data = {"prompt": "Help me calculate the md5 value of admin", "options": {}}
     
-    try:
-        with requests.Session() as session:
-            # 发起 GET 请求，获取网站title
-            get_response = session.get(line, headers=headers, verify=False, timeout=10, proxies=proxies)
-            
-            # 发起 POST 请求，测试网站是否能正常聊天
-            response = session.post(url=url, json=data, headers=headers, verify=False, timeout=10, proxies=proxies)
-        
-        soup = BeautifulSoup(get_response.text, 'html.parser')
-        title = soup.title.string
-        
-        if response.status_code == 200:
-            if 'rror' not in response.text and 'fail' not in response.text and title == 'ChatGPT Web':
-                print(line)
-                results_ok.append(line)
-            elif 'gpt' in title:
-                print(f'{url} {title}')
-                results_others.append(line)
+    domain = extract_domain(line)
+    url = f'{domain}/api/chat-process'
     
-    except Exception as e:
+    try:        
+        # 发起 POST 请求，测试网站是否能正常聊天
+        response = requests.post(url=url, json=data, headers=headers, verify=False, timeout=10, proxies=proxies)
+        
+        if "21232f297a57a5a743894a0e4a801fc3" in response.text:
+            print(line)
+            results_ok.add(domain)
+    
+    except requests.RequestException as e:
+        # print(e)
         pass
-
 
 if __name__ == '__main__':
     urllib3.disable_warnings(InsecureRequestWarning)
@@ -58,6 +53,9 @@ if __name__ == '__main__':
     
     with open(filepath, 'r') as f:
         lines = [line.strip() for line in f.readlines()]
+
+    # for line in lines:
+    #     print(line)
 
     threads = []
     for line in lines:
@@ -72,7 +70,4 @@ if __name__ == '__main__':
 
     with open('output.txt', 'w') as f:
         for result in results_ok:
-            f.write(result + '\n')
-        f.write('\n\n-----others-----\n')
-        for result in results_others:
             f.write(result + '\n')
