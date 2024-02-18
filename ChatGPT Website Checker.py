@@ -1,5 +1,4 @@
 import requests
-from bs4 import BeautifulSoup
 from threading import Thread
 import urllib3
 from urllib3.exceptions import InsecureRequestWarning
@@ -34,8 +33,8 @@ def request(line):
     url = f'{domain}/api/chat-process'
     
     try:        
-        # 发起 POST 请求，测试网站是否能正常聊天
-        response = requests.post(url=url, json=data, headers=headers, verify=False, timeout=10, proxies=proxies)
+        # 发起 POST 请求，测试网站是否能正常聊天, proxies=proxies
+        response = requests.post(url=url, json=data, headers=headers, verify=False, timeout=10)
         
         if "21232f297a57a5a743894a0e4a801fc3" in response.text:
             print(line)
